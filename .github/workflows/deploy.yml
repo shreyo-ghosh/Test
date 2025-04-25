@@ -1,0 +1,48 @@
+name: Deploy Cloud Function
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.21'
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Run tests
+      run: go test -v ./...
+
+    - name: Configure GCP credentials
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Deploy to sandbox
+      if: github.ref == 'refs/heads/main'
+      run: |
+        go build -o gcptool
+        ./gcptool deploy my-function -e sandbox -v ${{ github.sha }}
+
+    - name: Deploy to dev
+      if: github.ref == 'refs/heads/main'
+      run: |
+        ./gcptool deploy my-function -e dev -v ${{ github.sha }}
+
+    - name: Deploy to pro
+      if: github.ref == 'refs/heads/main' && github.event_name == 'release'
+      run: |
+        ./gcptool deploy my-function -e pro -v ${{ github.sha }} 
