@@ -1,0 +1,33 @@
+To create a Word template for the documentation:
+
+1. Open Microsoft Word
+2. Create a new document
+3. Set up the following styles:
+
+   Heading 1:
+   - Font: Arial, 16pt, Bold
+   - Color: #2C3E50
+   - Spacing: Before: 24pt, After: 12pt
+
+   Heading 2:
+   - Font: Arial, 14pt, Bold
+   - Color: #34495E
+   - Spacing: Before: 18pt, After: 12pt
+
+   Heading 3:
+   - Font: Arial, 12pt, Bold
+   - Color: #7F8C8D
+   - Spacing: Before: 12pt, After: 6pt
+
+   Normal:
+   - Font: Arial, 11pt
+   - Line spacing: 1.5
+   - Spacing: After: 6pt
+
+   Code:
+   - Font: Consolas, 10pt
+   - Background: #F8F9FA
+   - Border: 1pt solid #E9ECEF
+   - Padding: 6pt
+
+4. Save the document as "template.docx" in the docs folder 
